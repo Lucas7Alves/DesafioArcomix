@@ -1,0 +1,105 @@
+/* .details-container{
+    width: 65%;
+} */
+
+
+
+.info-content{
+    font-size: 1.3rem;
+}
+@media (max-width: 476px) {
+  
+    .details-container{
+        width: 95% !important;
+    }
+    .agend-btn{
+        width: 80% !important;
+        margin: 0 auto !important;
+        margin-top: 2vh !important;
+        padding-top: 1vh;
+    }
+}
+
+@media (min-width: 476px) and (max-width: 769px) {
+ 
+}
+@media (min-width: 475px) and (max-width: 992px) {
+    .details-container{
+        width: 70% !important;
+    }
+}
+@media (min-width: 475px) and (max-width: 992px) {
+    .details-container{
+        width: 70% !important;
+    }
+}
+@media (max-width: 764px) {
+    .details-info{
+        text-align: start !important;
+    }
+    .details-info > b{
+        width: 20% !important;
+    }
+}
+@media (min-width: 769px) and (max-width: 992px){
+  
+    .details-info{
+        width: 50%;
+    }
+}
+@media (max-width: 992px) {
+    .details-container{
+        margin: 0 auto !important;
+    }
+    .details-container{
+        margin: 5vh auto !important;
+    }
+    .agend-btn{
+        width: 45%;
+        padding-top: 1vh;
+    }
+}
+@media (min-width: 992px) and (max-width: 1080px){
+    .details-info-parent{
+        width: 100%;
+    } 
+    .details-container{
+        padding: 5vh 1vh !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1400px) {
+    .details-container{
+        width: 85% !important;
+    }   
+}
+@media (min-width: 992px) {
+ 
+    .details-container{
+        margin-top: 15vh !important;
+    }
+    .agend-btn{
+        width: 35%;
+        padding-top: 1vh;
+    }
+}
+@media (min-width: 1200px) {
+    .details-info{
+        text-align: end !important;
+    }
+}
+@media (min-width: 1300px){
+    
+    .details-container{
+        width: 65%;
+    }
+}
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{
+    padding: 1vh !important;
+    border: 0px !important;
+    outline: none !important;
+}
+.MuiInputBase-input{
+    pointer-events: none !important;
+}

@@ -1,0 +1,24 @@
+.acessar-perfil, .acessar-perfil:active{
+    font-size: 1.8rem;
+    padding-top: 0.5vh !important;
+}
+
+.avatar-icon, .avatar-icon:active{
+    font-size: 4rem !important;
+    color: var(--dark-blue) !important;
+    cursor: pointer;
+}
+.avatar-icon:hover{
+    color: #429acc !important;
+}
+
+@media (min-width: 768px) {
+    .hide-lg{
+        display: none !important;
+    }
+}
+@media (max-width: 768px) {
+    .hide-sm{
+        display: none;
+    }
+}

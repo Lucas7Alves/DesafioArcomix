@@ -1,0 +1,8 @@
+.back-btn{
+    font-size: 2rem;    
+    color: var(--main-black) !important;
+}
+.back-btn:hover, .back-btn:active{
+    
+    color: var(--faded-black) !important;
+}

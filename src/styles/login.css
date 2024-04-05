@@ -1,0 +1,101 @@
+.container-login{
+    border-radius: 5vh;
+    box-shadow: 15px 10px 40px 10px rgba(0, 0, 0, 0.185);
+    overflow: clip;
+    position: absolute;
+    max-height: 100vh;
+}
+
+@media (max-width: 576px) {
+    .container-login{
+        width: 80% !important;
+    }
+    .logo-login{
+        width: 70%;
+    }
+    .entrar-btn{
+        margin-bottom: 5vh !important;
+    }
+    .group-input{
+        width: 80% !important;
+    }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+    .container-login, .logo-login{
+        width: 70% !important;
+    }
+    .entrar-btn{
+        margin-bottom: 5vh !important;
+    }
+    .group-input{
+        width: 80% !important;
+    }
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .container-login{
+        width: 55% !important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+    .container-login{
+        width: 50% !important;
+    }
+}
+@media (min-width: 1200px) {
+    .container-login{
+        width: 45% !important;
+    }
+    .login-right-side, .login-left-side{
+        padding: 3vh 0;
+    }
+    .logo-login{
+        width: 75%;
+    }
+}
+
+
+.actor{
+    font-size: 3rem;
+    color: white;
+}
+
+.swap-btn, .swap-btn:active{
+    padding: 1vh !important;
+    font-size: 1.5rem !important;
+    border-radius: 100%;
+    background-color: var(--main-red) !important;
+    border: var(--peach-red) !important;
+    color: white !important;
+}
+.swap-btn:hover{
+    background-color: var(--peach-red) !important;
+}
+
+.bem-vindo{
+    color: var(--main-black);
+}
+.group-input{
+    padding: 0;
+    padding-bottom: 1vh;
+    margin-bottom: 3vh !important;
+    font-size: 1.8rem;
+    width: 55%;
+    border-bottom: 1px solid var(--main-black);
+}
+
+.input-icon{
+    border-right: 1px solid var(--main-black);
+}
+.option-label{
+    font-size: 1.1rem;
+    color: var(--dark-gray);
+}
+.form-input{
+    font-size: 1.5rem;
+}
+.entrar-btn, .entrar-btn:active{
+    border-radius: 10vh;
+    color: white !important;
+    padding: 1vh 2vh;
+    font-size: 1.5rem;
+}

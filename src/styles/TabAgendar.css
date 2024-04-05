@@ -1,0 +1,171 @@
+@media (max-width: 494px) {
+    .solicitacao-card{
+        width: 90% !important;
+    }
+    .lista-container{
+        width: 85% !important;
+    }  
+}
+@media (min-width: 494px) and (max-width: 769px) {
+    .solicitacao-card{
+        width: 70% !important;
+    }
+    .lista-container{
+        width: 65% !important;
+    }   
+}
+
+@media (min-width: 769px) and (max-width: 992px){
+    .solicitacao-card, .lista-container{
+        width: 60% !important;
+    }
+}
+@media (max-width: 992px) {
+    .button-row{
+        width: 50%;
+    }
+    .btn-container{
+        display: inline-flex;
+        justify-content: center;
+        margin: 2vh 0 5vh;
+        column-gap: 2vh !important;
+    }
+    .tab-btn{
+        width: 90%;
+        margin-right: 1vh !important;
+        font-size: 1.2rem;
+    }
+    .lista-container{
+        margin: 0 auto !important;
+        margin-bottom: 5vh !important;
+    }
+    .digitalClock{
+        justify-self: center !important;
+    }
+    .digitalClockText{
+        padding-top: 3vh;
+        padding-bottom: 3vh;
+        text-align: center !important;
+        font-size: 2rem !important;
+        font-weight: 700 !important;
+    }
+    .MuiDigitalClock-item{
+        justify-content: center !important;
+    }
+    .MuiDigitalClock-root{
+        width: fit-content !important;
+    }
+    .form-header{
+        justify-content: center !important;
+    }
+}
+@media (min-width: 992px) {
+    .tab-btn{
+        width: 85%;
+        font-size: 1.7rem;
+    }
+    .btn-container{
+        position: relative;
+        margin-top: 30vh;
+    }
+    .button-row{
+        margin-bottom: 3vh;
+    }   
+    .lista-container{
+        margin-top: 5vh !important;
+    } 
+    .criar-form-container{
+        min-height: 70vh;
+        max-height: 70vh;
+    }
+    .MuiStack-root{
+        display: grid !important;
+    }
+    .digitalClock{
+        margin: 0 !important;
+        justify-self: end !important;
+    }   
+    .digitalClockText{
+        text-align: end !important;
+    }
+    .agendamento-criado{
+        width: fit-content;
+        position: fixed;
+        top: 50vh;
+        left: 40vw;
+    }
+}
+@media (min-width: 992px) and (max-width: 1300px){
+    .solicitacao-card{
+        width: 80% !important;
+    }
+    .lista-container{
+        width: 80%;
+    } 
+}
+@media (min-width: 1300px){
+    .solicitacao-card{
+        width: 70% !important;
+    }
+    .lista-container{
+        width: 60%;
+    } 
+}
+@media (min-width: 1300px) and (max-width: 1600px){
+    .solicitacao-card{
+        width: 80% !important;
+    }
+}
+@media (min-width: 1200px) and (max-width: 1300px){
+    .solicitacao-card{
+        width: 65% !important;
+    }
+}
+
+.solic-btn, .solic-btn:hover{
+    margin-bottom: 1vh;
+    border-radius: 1vh;
+}
+
+.lista-container{
+    min-height: 70vh !important;
+    max-height: 70vh !important;
+}
+    
+.solicitacao-card{
+    padding: 1vh 0 !important;
+}
+    
+.tab-btn{
+    padding: 1vh 0;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.MuiInputBase-inputSizeSmall, .MuiOutlinedInput-root{
+    font-size: 14px !important;
+    border-radius: 20vh !important;
+}
+
+.MuiOutlinedInput-input::-webkit-scrollbar{
+    display: none !important;
+}
+.MuiAutocomplete-option, .MuiPickersDay-root, .MuiPickersCalendarHeader-labelContainer, .MuiDayCalendar-weekDayLabel, .MuiDigitalClock-item{
+    font-size: 14px !important;
+}
+.criar-form-container{
+    padding: 2vh 4vh 2vh 6vh;
+}
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper{
+    --bs-heading-color: var(--main-black);
+    width: 50vh;
+    height: 40vh;
+    border-radius: 2vh !important;
+    color: var(--main-black);
+}
+
+.disabled-time{
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+}
