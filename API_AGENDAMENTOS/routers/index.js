@@ -1,6 +1,8 @@
-const routerAgendamento = require("./agendamentoRoute");
+const routerColaborador = require("./ColaboradorRoute");
+const routerFornecedor = require("./FornecedorRoute"); 
 module.exports = (app) => {
-  app.use(routerAgendamento);
+  app.use(routerColaborador);
+  app.use(routerFornecedor); 
 };
 
 

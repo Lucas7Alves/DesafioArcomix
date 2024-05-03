@@ -2,6 +2,76 @@ class Tabelas {
   init(conexao) {
     this.conexao = conexao;
     this.criarTabelaAgendamentos();
+    this.criarTabelaColaborador();
+    this.criarTabelaaFornecedor();
+    this.criarTabelaLog();
+  }
+
+  criarTabelaColaborador() {
+    const sql = 
+    `
+    CREATE TABLE IF NOT EXISTS COLABORADOR (
+      MATRICULA_COLABORADOR CHAR(6) PRIMARY KEY,
+      NOME_COLABORADOR VARCHAR(40) NOT NULL,
+      EMAIL_COLABORADOR VARCHAR(30) NOT NULL,
+      SENHA_COLABORADOR VARCHAR(8) NOT NULL
+  );
+    `;
+
+    this.conexao.query(sql, (error) => {
+      if(error) {
+        console.log("Erro ao criar a tabela")
+        console.log(error.message);
+        return;
+      }
+      // console.log("Tabela criada")
+    });
+  }
+
+  criarTabelaaFornecedor() {
+    const sql = 
+    `
+    CREATE TABLE IF NOT EXISTS FORNECEDOR (
+      CNPJ CHAR(11) PRIMARY KEY,
+      RAZAO_SOCIAL VARCHAR(20) NOT NULL,
+      NOME_FANTASIA VARCHAR(20) NOT NULL,
+      LOGIN_FORNECEDOR CHAR(8) NOT NULL,
+      SENHA_FORNECEDOR VARCHAR(8) NOT NULL
+  );  
+    `;
+
+    this.conexao.query(sql, (error) => {
+      if(error) {
+        console.log("Erro ao criar a tabela")
+        console.log(error.message);
+        return;
+      }
+      // console.log("Tabela criada")
+    });
+  }
+
+  criarTabelaLog() {
+    const sql = 
+    `
+    CREATE TABLE IF NOT EXISTS LOG (
+      ID_AGENDAMENTO CHAR(6) PRIMARY KEY,
+      MATRICULA_COLABORADOR CHAR(6) NOT NULL,
+      DATA_ACEITE DATE,
+      DATA_RECUSA DATE,
+      DATA_FINALIZADA DATE,
+      FOREIGN KEY (ID_AGENDAMENTO) REFERENCES AGENDAMENTO(ID_AGENDAMENTO),
+      FOREIGN KEY (MATRICULA_COLABORADOR) REFERENCES COLABORADOR(MATRICULA_COLABORADOR)
+  );
+    `;
+
+    this.conexao.query(sql, (error) => {
+      if(error) {
+        console.log("Erro ao criar a tabela")
+        console.log(error.message);
+        return;
+      }
+      // console.log("Tabela criada")
+    });
   }
 
   criarTabelaAgendamentos() {
@@ -29,7 +99,7 @@ class Tabelas {
         console.log(error.message);
         return;
       }
-      console.log("Tabela criada")
+      // console.log("Tabela criada")
     });
     
   }
