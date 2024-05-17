@@ -4,7 +4,7 @@ const conexao = require("../infraestrutura/conexao");
 
 //solicitar agendamento
 router.post("/solicitar", (req, res) => {
-  const id_fornecedor = req.body.id_fornecedor;
+  const cnpj = req.body.cnpj;
   const tipo_carga = req.body.tipo_carga;
   const tipo_descarga = req.body.tipo_descarga;
   const recorrencia = req.body.recorrencia;
@@ -13,7 +13,7 @@ router.post("/solicitar", (req, res) => {
   const hora_entrega  = req.body.horario;
   const status = 'P';
 
-  const sql = ` INSERT INTO AGENDAMENTO (ID_AGENDAMENTO, ID_FORNECEDOR, TIPO_CARGA, TIPO_DESCARGA, RECORRENCIA, OBSERVACAO, HORA_ENTREGA, DATA_ENTREGA, STATUS) VALUES ('${idAgendamento}', '${id_fornecedor}', '${tipo_carga}', '${tipo_descarga}', '${recorrencia}', '${observacao}', '${hora_entrega}', '${data_entrega}', '${status}')`
+  const sql = ` INSERT INTO AGENDAMENTO (ID_AGENDAMENTO, CNPJ, TIPO_CARGA, TIPO_DESCARGA, RECORRENCIA, OBSERVACAO, HORA_ENTREGA, DATA_ENTREGA, STATUS) VALUES ('${idAgendamento}', '${cnpj}', '${tipo_carga}', '${tipo_descarga}', '${recorrencia}', '${observacao}', '${hora_entrega}', '${data_entrega}', '${status}')`
 
   conexao.query(sql, (error, results) => {
     
@@ -32,15 +32,14 @@ router.post("/solicitar", (req, res) => {
   });
 })
 
-
 //delete agendamento
-router.delete("/agendamentos/:id/:status", (req, res) => {
-  const id_fornecedor = req.params.id;
+router.delete("/delete/:id/:status", (req, res) => {
+  const cnpj = req.params.id;
   const status = req.params.status;
   
   const sql = 
   `
-  DELETE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = '${id_fornecedor}' AND STATUS = '${status}'
+  DELETE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = '${cnpj}' AND STATUS = '${status}'
   `
 
   conexao.query(sql, (error, results) => {
@@ -56,8 +55,56 @@ router.delete("/agendamentos/:id/:status", (req, res) => {
     } else {
       console.log("Solicitação deletada com sucesso!");
       res.status(200).json({ message: "Solicitação deletada com sucesso!" });
+
     }
   });
 });
+
+
+//Ler agendamentos pendentes
+router.get("/pendentes", (req, res) => {
+
+  const sql = 
+  `
+  SELECT * FROM AGENDAMENTO WHERE STATUS = P
+  `
+
+  conexao.query(sql, (erro, result) => {
+    if (err) {
+      console.log("Erro ao consultar tabela!");
+      console.log(error.message);
+      res.status(500).json({ message: "Erro ao consultar tabela!"
+      });
+    } else {
+      console.log("Tabela consultada com sucesso!");
+      res.status(200).json({ message: "Tabela consultada com sucesso!" 
+      });
+      res.jason(result);
+    }
+  })
+})
+
+//Ler agendamentos finalizados
+router.get("/finalizados", (req, res) => {
+
+  const sql = 
+  `
+  SELECT * FROM AGENDAMENTO WHERE STATUS = F
+  `
+
+  conexao.query(sql, (erro, result) => {
+    if (err) {
+      console.log("Erro ao consultar tabela!");
+      console.log(error.message);
+      res.status(500).json({ message: "Erro ao consultar tabela!"
+      });
+    } else {
+      console.log("Tabela consultada com sucesso!");
+      res.status(200).json({ message: "Tabela consultada com sucesso!" 
+      });
+      res.jason(result);
+    }
+  })
+})
 
 module.exports = router;

@@ -8,7 +8,7 @@ router.post("/agendamento/criar", (req, res) => {
   //Dados do agendamento
   const cnpj = req.body.cnpj;
   const idAgendamento = req.body.idAgendamento;
-  const matricula_colaborador = req.body.matricula_colaborador;
+  const matricula_colaborador = null; // porque não se faz necessário na solicitação
   const tipo_carga = req.body.tipo_cacarga;
   const tipo_descarga = req.body.tipo_descarga;
   const recorrencia = req.body.recorrencia;
@@ -39,11 +39,13 @@ router.post("/agendamento/criar", (req, res) => {
 });
 
 //Deletar agendamento 
-router.delete("/agendamento/:id/:status", (req, res) => {
-  const idAgendamento = req.params.id;
+router.delete("/deletar/:matricula_colaborador/:status/:cnpj/:idAgendamento", (req, res) => {
+  const idAgendamento = req.params.idAgendamento
+  const cnpj = req.params.id;
   const status = req.params.status;
+  matricula_colaborador = req.params.matricula_colaborador;
 
-  const sql = `DELETE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = '${idAgendamento}' AND STATUS = '${status}'`;
+  const sql = `DELETE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = '${idAgendamento}' AND STATUS = '${status}' AND CNPJ = '${cnpj} AND MATRICULA_COLABORADOR = NULL'`;
  
   //Deletando dado no banco de dados
   conexao.query(sql, (error, results) => {
@@ -62,5 +64,53 @@ router.delete("/agendamento/:id/:status", (req, res) => {
     }
   });
 });
+
+//Ler agendamentos pendentes
+router.get("/pendente/:cnpj", (req, res) => {
+  const cnpj = req.params.cnpj;
+
+  const sql = 
+  `
+  SELECT * FROM AGENDAMENTO WHERE STATUS = P AND CNPJ = '${cnpj}'
+  `
+
+  conexao.query(sql, (erro, result) => {
+    if (err) {
+      console.log("Erro ao consultar tabela!");
+      console.log(error.message);
+      res.status(500).json({ message: "Erro ao consultar tabela!"
+      });
+    } else {
+      console.log("Tabela consultada com sucesso!");
+      res.status(200).json({ message: "Tabela consultada com sucesso!" 
+      });
+      res.jason(result);
+    }
+  })
+})
+
+//Ler agendamentos finalizados
+router.get("/finalizados/:cnpj", (req, res) => {
+  const cnpj = req.params.cnpj;
+
+  const sql = 
+  `
+  SELECT * FROM AGENDAMENTO WHERE STATUS = F AND CNPJ = '${cnpj}'
+  `
+
+  conexao.query(sql, (erro, result) => {
+    if (err) {
+      console.log("Erro ao consultar tabela!");
+      console.log(error.message);
+      res.status(500).json({ message: "Erro ao consultar tabela!"
+      });
+    } else {
+      console.log("Tabela consultada com sucesso!");
+      res.status(200).json({ message: "Tabela consultada com sucesso!" 
+      });
+      res.jason(result);
+    }
+  })
+})
 
 module.exports = router;

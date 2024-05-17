@@ -28,15 +28,16 @@ class Tabelas {
     });
   }
 
-  criarTabelaaFornecedor() {
+  criarTabelaFornecedor() {
     const sql = 
     `
     CREATE TABLE IF NOT EXISTS FORNECEDOR (
       CNPJ CHAR(11) PRIMARY KEY,
       RAZAO_SOCIAL VARCHAR(20) NOT NULL,
       NOME_FANTASIA VARCHAR(20) NOT NULL,
-      LOGIN_FORNECEDOR CHAR(8) NOT NULL,
-      SENHA_FORNECEDOR VARCHAR(8) NOT NULL
+      ID_FORNECEDOR CHAR(20) NOT NULL,
+      SENHA_FORNECEDOR VARCHAR(8) NOT NULL,
+      INFORMACAO_LEGAL VARCHAR(100)
   );  
     `;
 
