@@ -3,7 +3,7 @@ class Tabelas {
     this.conexao = conexao;
     this.criarTabelaAgendamentos();
     this.criarTabelaColaborador();
-    this.criarTabelaaFornecedor();
+    this.criarTabelaFornecedor();
     this.criarTabelaLog();
   }
 
