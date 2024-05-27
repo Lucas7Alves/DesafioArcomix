@@ -115,19 +115,22 @@ router.post("/loginFornecedor", (req, res) => {
     const sql = `
     SELECT * FROM FORNECEDOR WHERE ID_FORNECEDOR = "${id_fornecedor}"; 
     `;
-    conexao.query(sql, (erro, result) => {
+    conexao.query(sql, (error, result) => {
       if (result.length > 0) {
         for (let i = 0; i < result.length; i++) {
           if (result[i].senha == this.senha) {
             req.session.id_fornecedor = result[i].id_fornecedor;
-
+            res.status(200).json({ message: "Login efetuado com sucesso!" });
+            res.jason(result);
             res.redirect("/");
           } else {
-            response.send("Id ou senha inválido");
+            console.log(error.message);
+            res.status(500).jason({message: "Id ou senha inválido"});
+            res.status("");
           }
         }
       } else {
-        res.send("Id ou senha inválido");
+        res.status(500).jason({message: "Id ou senha inválido"});
       }
       res.end();
     });

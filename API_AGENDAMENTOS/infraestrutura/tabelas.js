@@ -24,7 +24,7 @@ class Tabelas {
         console.log(error.message);
         return;
       }
-      // console.log("Tabela criada")
+      console.log("Tabela criada")
     });
   }
 
@@ -47,7 +47,7 @@ class Tabelas {
         console.log(error.message);
         return;
       }
-      // console.log("Tabela criada")
+      console.log("Tabela criada")
     });
   }
 
@@ -71,7 +71,7 @@ class Tabelas {
         console.log(error.message);
         return;
       }
-      // console.log("Tabela criada")
+      console.log("Tabela criada")
     });
   }
 
@@ -100,7 +100,7 @@ class Tabelas {
         console.log(error.message);
         return;
       }
-      // console.log("Tabela criada")
+      console.log("Tabela criada")
     });
     
   }
