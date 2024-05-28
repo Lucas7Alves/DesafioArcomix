@@ -140,6 +140,8 @@ router.post("/loginFornecedor", (req, res) => {
   }
 });
 
+
+
 router.get("/logout", (req, res, next) => {
   req.session.destroy();
 

@@ -4,6 +4,8 @@ const conexao = require("../infraestrutura/conexao");
 
 //solicitar agendamento
 router.post("/solicitar", (req, res) => {
+  const matricula_colaborador = req.body.matricula_colaborador;
+  const idAgendamento = req.body.idAgendamento;
   const cnpj = req.body.cnpj;
   const tipo_carga = req.body.tipo_carga;
   const tipo_descarga = req.body.tipo_descarga;
@@ -27,9 +29,31 @@ router.post("/solicitar", (req, res) => {
     } else {
       console.log("Agendamento criado com sucesso");
       res.status(200).json({ message: "Solicitação criada com sucesso!" });
+      logColaborador("solicitar", matricula_colaborador, cnpj)
     }
   });
 });
+
+function logColaborador(action, matricula, cnpj) {
+  if (action === "solicitar") {
+    log = 
+    `
+    INSERT INTO LOG (MATRICULA_COLABORADOR, CNPJ, DATA_CRIACAO)
+    VALUES ('${matricula}, ${cnpj}, CURRENT_TIMESTAMP')
+    `
+  } else if (action === "deletar") {
+    log = 
+    `
+    WITH DeletarEInserir AS (
+      DELETE FROM AGENDAMENTOS WHERE CNPJ = ${cnpj} AND id_agendamento = ${id_agendamento}
+      RETURNING ${cnpj} AS Cnpj, ${id_agendamento} AS IdAgendamento
+  )
+  INSERT INTO LOG (MATRICULA_COLABORADOR, CNPJ, ID_AGENDAMENTO, TIPO, DATA)
+  SELECT '${matricula}', Cnpj, IdAgendamento, 'deletar', CURRENT_TIMESTAMP
+  FROM DeletarEInserir;
+    `
+  }
+}
 
 //delete agendamento
 router.delete("/delete/:id/:status", (req, res) => {
