@@ -43,7 +43,6 @@ router.delete(
     const idAgendamento = req.params.idAgendamento;
     const cnpj = req.params.id;
     const status = req.params.status;
-    matricula_colaborador = req.params.matricula_colaborador;
 
     const sql = `DELETE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = '${idAgendamento}' AND STATUS = '${status}' AND CNPJ = '${cnpj} AND MATRICULA_COLABORADOR = NULL'`;
 
@@ -81,7 +80,7 @@ router.get("/pendente/:cnpj", (req, res) => {
     } else {
       console.log("Tabela consultada com sucesso!");
       res.status(200).json({ message: "Tabela consultada com sucesso!" });
-      res.jason(result);
+      res.json(result);
     }
   });
 });
@@ -102,18 +101,44 @@ router.get("/finalizados/:cnpj", (req, res) => {
     } else {
       console.log("Tabela consultada com sucesso!");
       res.status(200).json({ message: "Tabela consultada com sucesso!" });
-      res.jason(result);
+      res.json(result);
     }
   });
 });
 
+//resposta
+router.put("/resposta", (req, res) => {
+  if (req.body.resposta === "recusar") {
+    const idAgendamento = req.body.idAgendamento
+    sql = 
+    `
+    UPDATE AGENDAMENTO SET
+    STATUS = R WHERE ID_AGENDAMENTO = '${idAgendamento}'
+    `
+    
+    conexao.query(log, (error, result) => {
+      if (error) {
+        console.log("Erro ao recusar!");
+        console.log(error.message);
+        res.status(500).json({ message: "Erro ao recusar!" });
+      } else {
+        console.log("Recusado!");
+        res.status(200).json({ message: "Recusa realizada com sucesso!" });
+        res.json(result);
+      }
+    });
+  }
+});
+
+//login
 router.post("/loginFornecedor", (req, res) => {
   const id_fornecedor = req.body.id_fornecedor;
   const senha = req.body.senha;
 
   if (id_fornecedor && senha) {
-    const sql = `
-    SELECT * FROM FORNECEDOR WHERE ID_FORNECEDOR = "${id_fornecedor}"; 
+    const sql = 
+    `
+    SELECT * FROM FORNECEDOR WHERE ID_FORNECEDOR = "${id_fornecedor} AND SENHA = ${senha}"; 
     `;
     conexao.query(sql, (error, result) => {
       if (result.length > 0) {
@@ -121,16 +146,16 @@ router.post("/loginFornecedor", (req, res) => {
           if (result[i].senha == this.senha) {
             req.session.id_fornecedor = result[i].id_fornecedor;
             res.status(200).json({ message: "Login efetuado com sucesso!" });
-            res.jason(result);
+            res.json(result);
             res.redirect("/");
           } else {
             console.log(error.message);
-            res.status(500).jason({message: "Id ou senha inválido"});
+            res.status(500).json({message: "Id ou senha inválido"});
             res.status("");
           }
         }
       } else {
-        res.status(500).jason({message: "Id ou senha inválido"});
+        res.status(500).json({message: "Id ou senha inválido"});
       }
       res.end();
     });
@@ -141,11 +166,51 @@ router.post("/loginFornecedor", (req, res) => {
 });
 
 
-
 router.get("/logout", (req, res, next) => {
   req.session.destroy();
 
   res.redirect("/");
 });
+
+function logFornecedor(action) {
+  if (action === "criar") {
+    log = 
+    `
+    INSERT INTO LOG (CNPJ, ID_AGENDAMENTO, DATA_CRIACAO)
+    VALUES ('${matricula}, ${cnpj}, ${idAgendamento}, CURRENT_TIMESTAMP')
+    `
+    conexao.query(log, (error, result) => {
+      if (error) {
+        console.log("Erro ao registrar na tabela log!");
+        console.log(error.message);
+        res.status(500).json({ message: "Erro ao registrar na tabela log!" });
+      } else {
+        console.log("Solicitado!");
+        res.status(200).json({ message: "Registro realizado com sucesso!" });
+        res.json(result);
+      }
+    
+    });
+  } else if (action === "deletar") {
+    log = 
+    `
+    INSERT INTO LOG (CNPJ, ID_AGENDAMENTO, DATA_CRIACAO)
+    VALUES ('${matricula}, ${cnpj}, ${idAgendamento}, CURRENT_TIMESTAMP')
+    `
+
+    conexao.query(log, (error, result) => {
+      if (error) {
+        console.log("Erro ao registrar na tabela log!");
+        console.log(error.message);
+        res.status(500).json({ message: "Erro ao registrar na tabela log!" });
+      } else {
+        console.log("Solicitado!");
+        res.status(200).json({ message: "Registro realizado com sucesso!" });
+        res.json(result);
+      }
+    
+    });
+  }
+}
 
 module.exports = router;
