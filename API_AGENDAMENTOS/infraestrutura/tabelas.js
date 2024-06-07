@@ -5,6 +5,7 @@ class Tabelas {
     this.criarTabelaColaborador();
     this.criarTabelaFornecedor();
     this.criarTabelaLog();
+    this.criarTabelaLogFornecedor();
   }
 
   criarTabelaColaborador() {
@@ -55,11 +56,10 @@ class Tabelas {
     const sql = 
     `
     CREATE TABLE IF NOT EXISTS LOG (
+      TIPO VARCHAR(10),
       ID_AGENDAMENTO CHAR(6) PRIMARY KEY,
       MATRICULA_COLABORADOR CHAR(6) NOT NULL,
-      DATA_ACEITE DATE,
-      DATA_RECUSA DATE,
-      DATA_FINALIZADA DATE,
+      DATA_OCORRENCIA DATE,
       FOREIGN KEY (ID_AGENDAMENTO) REFERENCES AGENDAMENTO(ID_AGENDAMENTO),
       FOREIGN KEY (MATRICULA_COLABORADOR) REFERENCES COLABORADOR(MATRICULA_COLABORADOR)
   );
@@ -74,6 +74,30 @@ class Tabelas {
       console.log("Tabela criada")
     });
   }
+
+  criarTabelaLogFornecedor() {
+    const sql = 
+    `
+    CREATE TABLE IF NOT EXISTS LOG_FORNECEDOR (
+      ID_LOG INT AUTO_INCREMENT PRIMARY KEY,
+      TIPO VARCHAR(10),
+      ID_AGENDAMENTO CHAR(6),
+      CNPJ CHAR(14),
+      DATA_OCORRENCIA DATE,
+      FOREIGN KEY (CNPJ) REFERENCES FORNECEDOR(CNPJ)
+  );
+    `;
+
+    this.conexao.query(sql, (error) => {
+      if(error) {
+        console.log("Erro ao criar a tabela")
+        console.log(error.message);
+        return;
+      }
+      console.log("Tabela criada")
+    });
+  }
+
 
   criarTabelaAgendamentos() {
     const sql = 

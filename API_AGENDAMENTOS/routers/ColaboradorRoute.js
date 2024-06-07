@@ -18,17 +18,17 @@ router.post("/solicitar", (req, res) => {
 
   const sql = ` INSERT INTO AGENDAMENTO (ID_AGENDAMENTO, CNPJ, MATRICULA_COLABORADOR, TIPO_CARGA, TIPO_DESCARGA, RECORRENCIA, OBSERVACAO, HORA_ENTREGA, DATA_ENTREGA, STATUS) VALUES ('${idAgendamento}', '${cnpj}', '${matricula_colaborador}', '${tipo_carga}', '${tipo_descarga}', '${recorrencia}', '${observacao}', '${hora_entrega}', '${data_entrega}', '${status}')`;
 
-  conexao.query(sql, (error, results) => {
+  conexao.query(sql, (error, result) => {
     //Tratando erros
     if (error) {
       res
         .status(500)
         .json({ message: "Erro ao criar a solicitação: " + error });
-    } else if (results.changedRows === 0) {
-      res.status(200).json({ message: "A solicitação foi criada!" });
+    } else if (result.affectedRows === 0) {
+      res.status(200).json({ message: "A solicitação não foi criada!" });
     } else {
       res.status(200).json({ message: "Solicitação criada com sucesso!" });
-      logColaborador("solicitar", matricula_colaborador, cnpj, idAgendamento);
+      logColaborador("solicitar", matricula_colaborador, idAgendamento);
     }
   });
 });
@@ -42,13 +42,13 @@ router.delete("/delete", (req, res) => {
   DELETE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = '${idAgendamento}' AND STATUS = '${status}'
   `;
 
-  conexao.query(sql, (error, results) => {
+  conexao.query(sql, (error, result) => {
     //Tratando erros
     if (error) {
       console.log("Erro ao deletar a solicitação!");
       console.log(error.message);
       res.status(500).json({ message: "Erro ao deletar a solicitação!" });
-    } else if (results.affectedRows === 0) {
+    } else if (result.affectedRows === 0) {
       console.log("Solicitação não encontrado!");
       res.status(404).json({ message: "Solicitação não encontrada!" });
     } else {
@@ -103,7 +103,6 @@ router.put("/resposta", (req, res) => {
   const resposta = req.body.resposta;
   const idAgendamento = req.body.idAgendamento;
   const matricula_colaborador = req.body.matricula_colaborador;
-  const cnpj = req.body.cnpj;
   if (resposta === "aceitar") {
     sql = `
     UPDATE AGENDAMENTO SET STATUS = 'A' WHERE ID_AGENDAMENTO = '${idAgendamento}'
@@ -115,11 +114,11 @@ router.put("/resposta", (req, res) => {
         res.status(500).json({ message: "Erro ao aceitar!" });
       } else {
         console.log("Aceitado!");
+        logColaborador(resposta, matricula_colaborador, idAgendamento);
         res.status(200).json({ message: "Aceite realizado com sucesso!" }); //
-        logColaborador(resposta, matricula_colaborador, cnpj, idAgendamento);
       }
     });
-  } else if (req.body.resposta === "recusar") {
+  } else if (resposta === "recusar") {
     const idAgendamento = req.body.idAgendamento;
     sql = `
     UPDATE AGENDAMENTO SET
@@ -133,11 +132,11 @@ router.put("/resposta", (req, res) => {
         res.status(500).json({ message: "Erro ao recusar!" });
       } else {
         console.log("Recusado!");
+        logColaborador(resposta, matricula_colaborador, idAgendamento);
         res.status(200).json({ message: "Recusa realizada com sucesso!" });
-        logColaborador(resposta, matricula_colaborador, cnpj, idAgendamento);
       }
     });
-  } else if (req.body.resposta === "finalizar") {
+  } else if (resposta === "finalizar") {
     const idAgendamento = req.body.idAgendamento;
     sql = `
     UPDATE AGENDAMENTO SET
@@ -154,7 +153,7 @@ router.put("/resposta", (req, res) => {
         res
           .status(200)
           .json({ message: "Agendamento finalizado com sucesso!" });
-        logColaborador(resposta, matricula_colaborador, cnpj, idAgendamento);
+        logColaborador(resposta, matricula_colaborador, idAgendamento);
       }
     });
   }
@@ -165,15 +164,14 @@ router.post("/loginColaborador", (req, res) => {
   const matricula = req.body.matricula;
   const senha = req.body.senha;
 
-  if (matricula && senha) { 
+  if (matricula && senha) {
     const sql = `
     SELECT * FROM COLABORADOR WHERE MATRICULA_COLABORADOR = '${matricula}' AND SENHA_COLABORADOR = '${senha}'; 
     `;
     conexao.query(sql, (error, result) => {
-
       if (result.length > 0) {
         if (result[0].SENHA_COLABORADOR === senha) {
-          res.status(200).json({ message: "Login efetuado com sucesso!"});
+          res.status(200).json({ message: "Login efetuado com sucesso!" });
         } else {
           res.status(500).json({ message: "Matrícula ou senha inválido" });
         }
@@ -182,17 +180,27 @@ router.post("/loginColaborador", (req, res) => {
       }
     });
   } else {
-    res.status(400).json({ message: "Insira uma matrícula e uma senha válida" });
+    res
+      .status(400)
+      .json({ message: "Insira uma matrícula e uma senha válida" });
   }
 });
 
-
 // Inserindo modificações na tabela log
-function logColaborador(action, matricula, cnpj, idAgendamento) {
-    log = `
-    INSERT INTO LOG (TIPO, MATRICULA_COLABORADOR, CNPJ, ID_AGENDAMENTO, DATA_CRIACAO)
-    VALUES ( ${action}, '${matricula}, ${cnpj}, ${idAgendamento}, CURRENT_TIMESTAMP')
-    `;
+function logColaborador(action, matricula, idAgendamento) {
+  const log = `
+    INSERT INTO LOG (TIPO, MATRICULA_COLABORADOR, ID_AGENDAMENTO, DATA_OCORRENCIA)
+    VALUES ('${action}', '${matricula}', '${idAgendamento}', CURRENT_TIMESTAMP)
+  `;
+
+  conexao.query(log, (error, result) => {
+    if (error) {
+      console.log("Erro ao registrar na tabela log!");
+      console.log(error.message);
+    } else {
+      console.log("Solicitado!");
+    }
+  });
 }
 
 module.exports = router;
