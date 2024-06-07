@@ -66,5 +66,10 @@
     "fs": false,
     "path": false,
     "os": false
-  }
+  },
+  "description": "Desafio proposto pela Arcomix em parceria com o Porto Digital",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
